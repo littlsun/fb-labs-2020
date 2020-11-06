@@ -9,8 +9,8 @@ f = open("./text2.txt",  encoding="utf8")
 data = f.read()
 text1=""
 dictionary1="абвгдежзийклмнопрстуфхцчшщъыьэюя"
-keylist1=["да","нет","жаль","может","форель","наверно","возможно","кукарекал","десятьбукв","аггресивный","жонглировать","автотрранспор"]
-keylist=["ав","авт","авто","автот","автотр","автотра","автортран","автотранс","автотрансп","автотранспо","автотранспор","автотранспорт"]
+keylist=["да","нет","жаль","может","форель","наверно","возможно","кукарекал","десятьбукв","аггресивный","жонглировать","автотрранспор"]
+keylist1=["ав","авт","авто","автот","автотр","автотра","автортран","автотранс","автотрансп","автотранспо","автотранспор","автотранспорт"]
 for y in data:
     y = y.lower()
     for x in dictionary1:
@@ -49,23 +49,34 @@ def mono_freq(t):
         if i == u'\n':
             continue
         if i in letter:
-            letter[i] = float(letter.get(i) + 1.0/len(t))
+            letter[i] = letter.get(i) + 1
         else:
-            letter[i] = float(1.0/len(t))
+            letter[i] = 1
     return letter
+
+def index (t):
+    sum=0
+    for i in t.values():
+        sum+=(i)*(i-1)
+    return sum/(len(data)*(len(data)-1))
 
 letter1 = mono_freq(text1)
 
 print ("\n======================= Відкритий текст =====================================")
 for key, value in sorted(letter1.items(), key= itemgetter(1), reverse=True):
-    print ("\"%s\": %s" % (key, round(value,7)),end="\t")
+    print ("\"%s\": %s" % (key, round(value,7)),end="\n")
+print("========================================\nіндекс відкритого тексту", index(letter1))
 
 print("\n\n",text1[0:25])
 
 for i in range(0, len (keylist)):
     print ("\n\n========================================== Шифрований текст",i,"=====================================")
+
     print("\nдлинна ключа=",len(keylist[i]),"\n\n",text1[0:25],"\n",encode(text1,keylist[i])[0:25],"\n")
+
     for key, value in sorted(mono_freq(encode(text1,keylist[i])).items(), key= itemgetter(1), reverse=True):
-        print ("\"%s\": %s" % (key, round(value,7)), end="\t")
+        print ("\"%s\": %s" % (key, round(value,7)), end="\n")
+
+    print("========================================\nіндекс шифротексту",i, "\n", index(mono_freq(encode(text1,keylist[i]))))
 
 print("\n")
