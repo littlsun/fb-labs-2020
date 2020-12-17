@@ -94,7 +94,7 @@ def check(encrypted_text, key_length):
         return_text = ''
     print("\n", key_length, small_index(mono_quantity(encrypted_text), encrypted_text), "\n for each:")
     for i in range(0, len(rl)):
-        print("\t", i+1, small_index(mono_quantity(rl[i]), rl[i]))
+        print("\t", small_index(mono_quantity(rl[i]), rl[i]))
     print("Show freq? (да or skip)")
     if input() == "да":
         for i in range(0, len(rl)):
