@@ -182,7 +182,6 @@ cypher_lst = create_bigrams_list(clear_text)
 letter1 = mono_freq(clear_text)
 bezpbigram1 = noncross_bigrams(clear_text)
 
-
 k = 1
 print (" ")
 print ("=======================MONOGRAMS WITHOUT SPACE=====================================")
@@ -203,6 +202,8 @@ for key, value in sorted(bezpbigram1.items(), key= itemgetter(1), reverse=True):
 	if k == 100:
 		break
 	k += 1
+
+
 
 cypher_lst = []
 alt = 0
