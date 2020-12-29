@@ -23,7 +23,6 @@ H2 non-overlapping 4.1296264
 
 from operator import itemgetter
 
-out = open("./out.txt", "w")
 f = open("./16.txt", encoding="utf8")
 data = f.read()
 my_dict = "абвгдежзийклмнопрстуфхцчшщьыэюя"
@@ -182,6 +181,7 @@ cypher_lst = create_bigrams_list(clear_text)
 letter1 = mono_freq(clear_text)
 bezpbigram1 = noncross_bigrams(clear_text)
 
+
 k = 1
 print (" ")
 print ("=======================MONOGRAMS WITHOUT SPACE=====================================")
@@ -202,8 +202,6 @@ for key, value in sorted(bezpbigram1.items(), key= itemgetter(1), reverse=True):
 	if k == 100:
 		break
 	k += 1
-
-
 
 cypher_lst = []
 alt = 0
@@ -247,6 +245,7 @@ result = []
 entropies = []
 posibble_str = ''
 posibble_list = []
+posibble_keys = []
 for fkey in keys:
 	for jkey in cypher_lst:
 		lkey = decode(fkey[0],fkey[1],jkey)
@@ -276,6 +275,7 @@ for fkey in keys:
 					if final_ == 3:
 						if posibble_str not in result:
 							print(fkey)
+							posibble_keys.append(fkey)
 							result.append(posibble_str)
 					if k_ == 5:
 						break
@@ -290,9 +290,16 @@ print("\n=======================================================================
 for p in result:
 	print(p[:100])
 
+
 while True:
-	pp = int(input("which text to show? (-1 to exit) "))
+	pp = int(input("\nwhich text to show? (-1 to exit)\n::\t "))
 	if pp == -1:
 		break
 	else:
-		print(result[pp])
+		print(posibble_keys[pp], result[pp])
+		if input("Print to file this test (yes or no?)") == "yes":
+			sys.stdout = open("result.txt", "w")
+			for jkey in cypher_lst:
+				print(from_number(decode(posibble_keys[pp][0], posibble_keys[pp][1], jkey)), end="")
+			sys.stdout.close()
+			break
